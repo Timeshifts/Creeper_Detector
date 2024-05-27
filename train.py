@@ -4,7 +4,7 @@ def train():
     # 모델 로드
     model = YOLO('yolov8s.pt')
 
-    results = model.train(data="creeper.yaml", epochs=3, imgsz=640, batch=8, auto_augment='randaugment')
+    results = model.train(data="creeper.yaml", epochs=10, imgsz=640, batch=8, auto_augment='randaugment')
 
     results = model.val()
 
