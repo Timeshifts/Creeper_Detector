@@ -4,36 +4,39 @@ import os
 import shutil
 from sklearn.model_selection import train_test_split
 
-# 이미지와 라벨 파일 경로
-dataset_dir = 'datasets/creeper/'
-image_dir = dataset_dir + '/images'
-label_dir = dataset_dir + 'labels'
-train_image_dir = dataset_dir + 'train/images'
-test_image_dir = dataset_dir + 'test/images'
-train_label_dir = dataset_dir + 'train/labels'
-test_label_dir = dataset_dir + 'test/labels'
+def split_data():
+    # 이미지와 라벨 파일 경로
+    dataset_dir = 'datasets/creeper/'
+    image_dir = dataset_dir + '/images'
+    label_dir = dataset_dir + 'labels'
+    train_image_dir = dataset_dir + 'train/images'
+    test_image_dir = dataset_dir + 'test/images'
+    train_label_dir = dataset_dir + 'train/labels'
+    test_label_dir = dataset_dir + 'test/labels'
 
-# 디렉토리 생성
-os.makedirs(train_image_dir, exist_ok=True)
-os.makedirs(test_image_dir, exist_ok=True)
-os.makedirs(train_label_dir, exist_ok=True)
-os.makedirs(test_label_dir, exist_ok=True)
+    # 디렉토리 생성
+    os.makedirs(train_image_dir, exist_ok=True)
+    os.makedirs(test_image_dir, exist_ok=True)
+    os.makedirs(train_label_dir, exist_ok=True)
+    os.makedirs(test_label_dir, exist_ok=True)
 
-# 이미지 파일 리스트 가져오기
-images = [f for f in os.listdir(image_dir) if f.endswith('.png')]
-labels = [f.replace('.jpg', '.txt').replace('.png', '.txt') for f in images]
+    # 이미지 파일 리스트 가져오기
+    images = [f for f in os.listdir(image_dir) if f.endswith('.png')]
+    labels = [f.replace('.jpg', '.txt').replace('.png', '.txt') for f in images]
 
-# 데이터셋 분할 (80% train, 20% test)
-train_images, test_images, train_labels, test_labels = train_test_split(
-    images, labels, test_size=0.2, random_state=42)
+    if len(images) == 0: return
 
-# 파일 이동
-for img, lbl in zip(train_images, train_labels):
-    shutil.move(os.path.join(image_dir, img), os.path.join(train_image_dir, img))
-    shutil.move(os.path.join(label_dir, lbl), os.path.join(train_label_dir, lbl))
+    # 데이터셋 분할 (80% train, 20% test)
+    train_images, test_images, train_labels, test_labels = train_test_split(
+        images, labels, test_size=0.2, random_state=42)
 
-for img, lbl in zip(test_images, test_labels):
-    shutil.move(os.path.join(image_dir, img), os.path.join(test_image_dir, img))
-    shutil.move(os.path.join(label_dir, lbl), os.path.join(test_label_dir, lbl))
+    # 파일 이동
+    for img, lbl in zip(train_images, train_labels):
+        shutil.move(os.path.join(image_dir, img), os.path.join(train_image_dir, img))
+        shutil.move(os.path.join(label_dir, lbl), os.path.join(train_label_dir, lbl))
 
-print("Data split completed.")
+    for img, lbl in zip(test_images, test_labels):
+        shutil.move(os.path.join(image_dir, img), os.path.join(test_image_dir, img))
+        shutil.move(os.path.join(label_dir, lbl), os.path.join(test_label_dir, lbl))
+
+    print("Data split completed.")
