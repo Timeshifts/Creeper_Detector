@@ -72,9 +72,6 @@ def draw_explosion(frame, box, pitch=10):
     # 크리퍼 발 좌표 계산
     center = (int((x1 + x2) / 2), int(y2))
 
-    ratio = (y2 - y1) / (x2 - x1)
-    print(ratio)
-
     # 폭발 반경 표시
     cv2.ellipse(frame, center, 
                 (explosion_radius_pixels_x, explosion_radius_pixels_y),
@@ -124,10 +121,9 @@ def main():
                     # creeper_image = draw_ar(creeper_image)
                     # if creeper_image is not None:
                     #    cv2.imshow('Another Detector', creeper_image)
-                    
+
                 if debug_mode:
-                    if label is None:
-                        label = f'{model.names[int(cls)]} {conf:.2f}'
+                    label = f'{model.names[int(cls)]} {conf:.2f}'
                     if conf > min_conf:
                         cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
                         cv2.putText(frame, label, (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
