@@ -1,7 +1,8 @@
-import cv2, time
+import cv2, time, torch
 import numpy as np
 import pyautogui
 import pygetwindow as gw
+from ultralytics import YOLO
 
 def capture_screen(region=None):
     # 화면을 캡처하고 NumPy 배열로 변환
@@ -11,13 +12,15 @@ def capture_screen(region=None):
 
 # OpenCV 창의 가로 크기
 window_width = 1920
+frame_delay = 1 / 30
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def main():
-    print(cv2.__version__)
-    print(np.__version__)
-    print(pyautogui.__version__)
-    print(gw.__version__)
-    frame_delay = 1 / 30
+    
+    model = YOLO('creeper_model.pt')
+    model.to(device)
+
 
     while True:
         windows = gw.getWindowsWithTitle('Minecraft')
@@ -39,9 +42,27 @@ def main():
         # 화면 캡처
         frame = capture_screen(region)
         
-        # OpenCV로 화면 처리
-        frame_resized = cv2.resize(frame, (window_width, int(window_width * height / width)))
-        cv2.imshow('MC Thing', frame_resized)
+        # OpenCV로 화면 크기 조정
+        frame = cv2.resize(frame, (window_width, int(window_width * height / width)))
+
+        # YOLOv5 모델로 객체 탐지
+        results = model(frame, verbose=False)
+        
+        # 결과 처리
+        for result in results:
+            boxes = result.boxes.xyxy
+            confs = result.boxes.conf
+            classes = result.boxes.cls
+
+            for box, conf, cls in zip(boxes, confs, classes):
+                x1, y1, x2, y2 = box
+                if conf > 0.5:  # 신뢰도가 0.5 이상일 때만 표시
+                    label = f'{model.names[int(cls)]} {conf:.2f}'
+                    cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
+                    cv2.putText(frame, label, (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+                    cv2.circle(frame, (int((x1 + x2) / 2), int(y2)), 15, (0, 0, 0), -1)
+
+        cv2.imshow('Creeper Detector', frame)
         
         # 'ESC' 키를 누르면 루프 종료
         if cv2.waitKey(1) & 0xFF == 27:
