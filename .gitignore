@@ -3,3 +3,4 @@ yolov8n.pt
 yolov8s.pt
 runs
 screenshot/*
+__pycache__
