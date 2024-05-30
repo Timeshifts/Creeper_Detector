@@ -110,7 +110,7 @@ def draw_explosion(frame, box, pitch=10):
 
 def main():
     
-    model = YOLO('creeper_model.pt')
+    model = YOLO('resource/creeper_model.pt')
     model.to(device)
 
     while True:
