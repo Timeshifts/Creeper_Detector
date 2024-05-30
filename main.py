@@ -13,11 +13,24 @@ frame_delay = 1 / 30
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-debug_mode = False
-pose_estimation = False
+def read_options_from_file(file_path, encoding='UTF-8'):
+    options = {}
+    with open(file_path, 'r', encoding=encoding) as file:
+        for line in file:
+            if line.strip() and not line.startswith('#'):
+                key, value = line.strip().split('=')
+                options[key.strip()] = value.strip()
+    return options
 
-min_conf = 0.389
-debug_conf = 0.1
+options = read_options_from_file('options.txt')
+
+debug_mode = options.get('debug_mode', False)
+pose_estimation = options.get('pose_estimation', False)
+
+min_conf = float(options.get('min_conf', 0.389))
+debug_conf = float(options.get('debug_conf', 0.1))
+
+warning_distance = float(options.get('warning_distance', 7))
 
 pygame.init()
 pygame.mixer.init()
@@ -134,8 +147,7 @@ def main():
                 if conf > min_conf:  # 신뢰도가 일정 값 이상일 때만 표시
                     label = f'{model.names[int(cls)]} {conf:.2f}'
                     distance = draw_explosion(frame, box)
-    
-                    if distance < 7:
+                    if distance < warning_distance:
                         warn_exists = True
                     # pose_estimation.py 참고
                     if pose_estimation:
@@ -150,8 +162,7 @@ def main():
                     if debug_mode:
                         cv2.putText(frame, label, (int(x1), int(y1) - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 255), 2)
                         if conf < min_conf and conf > debug_conf:
-                            cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 255), 2)
-                        
+                            cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 255), 2)      
 
         if warn_exists:
             if not pygame.mixer.get_busy(): warn_sound.play() 
