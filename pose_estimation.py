@@ -4,7 +4,7 @@
 import numpy as np
 import cv2 as cv
 
-cover_file = 'creeper_head.png'
+cover_file = 'resource/creeper_head.png'
 min_inlier_num = 20
 
 fdetector = cv.ORB_create()
@@ -25,6 +25,10 @@ box_upper = np.array([[30, 145, -50], [30, 200, -50], [200, 200, -50], [200, 145
 calib_param = cv.CALIB_FIX_ASPECT_RATIO | cv.CALIB_FIX_PRINCIPAL_POINT | cv.CALIB_ZERO_TANGENT_DIST | cv.CALIB_FIX_K3 | cv.CALIB_FIX_K4 | cv.CALIB_FIX_K5 | cv.CALIB_FIX_S1_S2_S3_S4 | cv.CALIB_FIX_TAUX_TAUY
 
 def draw_ar(img):
+    height, width = obj_image.shape[:2]
+
+    # 크리퍼 머리 키우기
+    img = cv.resize(img, (height, width), interpolation=cv.INTER_CUBIC)
 
     # Extract features and match them to the object features
     img_keypoints, img_descriptors = fdetector.detectAndCompute(img, None)
