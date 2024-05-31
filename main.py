@@ -1,15 +1,10 @@
-import cv2, time, torch, pyautogui
+import cv2, time, torch, pyautogui, datetime, pygame
 import numpy as np
 import pygetwindow as gw
 from ultralytics import YOLO
-import datetime, pygame, math
 
 # from pitch_estimation import estimate_pitch
 from pose_estimation import draw_ar
-
-# OpenCV 창의 가로 크기
-window_width = 1920
-frame_delay = 1 / 30
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -31,10 +26,26 @@ min_conf = float(options.get('min_conf', 0.389))
 debug_conf = float(options.get('debug_conf', 0.1))
 
 warning_distance = float(options.get('warning_distance', 7))
+assert warning_distance > 0, 'Warning distance must be positive.'
+
+# 창 관련 정보
+window_width = int(options.get('window_width', 1920))
+window_height = int(options.get('window_height', 1080))
+assert window_width > 640, 'Too small window width!'
+assert window_height > 480, 'Too small window height!'
+
+frame_delay = 1 / 30
+
+# Pygame 창 설정
+pygame_screen = pygame.display.set_mode((window_width, window_height))
+pygame.display.set_caption("Creeper Detector")
 
 pygame.init()
 pygame.mixer.init()
+
 warn_sound = pygame.mixer.Sound('resource/warn.wav')
+shutter_sound = pygame.mixer.Sound('resource/shutter.wav')
+font = pygame.font.Font('resource/NanumBarunGothic.ttf', 24)
 
 def get_frame(resize=True):
     windows = gw.getWindowsWithTitle('Minecraft')
@@ -126,11 +137,12 @@ def main():
     model = YOLO('resource/creeper_model.pt')
     model.to(device)
 
-    while True:
+    running = True
+    while running:
         start_time = time.time()
 
         frame = get_frame()
-        frame_2 = frame.copy()
+        if pose_estimation: frame_2 = frame.copy()
         # YOLOv8 모델로 객체 탐지
         results = model(frame, verbose=False)
         
@@ -169,26 +181,39 @@ def main():
         else:
             if pygame.mixer.get_busy(): warn_sound.stop()
 
-        cv2.imshow('Creeper Detector', frame)
+        # OpenCV 프레임을 Pygame surface로 변환
+        size = frame.shape[1::-1]
+        pygame_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # pygame_frame = np.rot90(pygame_frame)
+        pygame_frame = pygame.image.frombuffer(pygame_frame.flatten(), size, 'RGB')
+        pygame_frame = pygame.transform.scale(pygame_frame, (window_width, window_height))
 
-        key = cv2.waitKey(1)
+        # Pygame 창에 OpenCV 프레임 표시
+        pygame_screen.blit(pygame_frame, (0, 0))
 
-        # 'ESC' 키를 누르면 루프 종료
-        if key & 0xFF == 27:
-            break
-        # 's' 키를 누르면 이미지 저장
-        elif key & 0xFF == ord('s'):
-            # Generate a timestamp
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            cv2.imwrite(f'screenshot/{timestamp}.png', frame)
-            print(f'screenshot/{timestamp}.png')
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                elif event.key == pygame.K_s:
+                    # 's' 키를 누르면 이미지 저장
+                    # Generate a timestamp
+                    shutter_sound.play()
+                    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                    cv2.imwrite(f'screenshot/{timestamp}.png', frame)
+                    print(f'screenshot/{timestamp}.png')
 
         # 다음 캡처까지 대기
         elapsed_time = time.time() - start_time
         sleep_time = max(0, frame_delay - elapsed_time)
         time.sleep(sleep_time)
 
+        pygame.display.update()
+
     cv2.destroyAllWindows()
+    pygame.quit()
 
 if __name__ == "__main__":
     main()
