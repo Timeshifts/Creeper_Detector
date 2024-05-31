@@ -24,8 +24,8 @@ def read_options_from_file(file_path, encoding='UTF-8'):
 
 options = read_options_from_file('options.txt')
 
-debug_mode = options.get('debug_mode', False)
-pose_estimation = options.get('pose_estimation', False)
+debug_mode = options.get('debug_mode', 'false').lower() == 'true'
+pose_estimation = options.get('pose_estimation', 'false').lower() == 'true'
 
 min_conf = float(options.get('min_conf', 0.389))
 debug_conf = float(options.get('debug_conf', 0.1))
