@@ -12,9 +12,6 @@ window_height = 1080
 # -1로 두면 비활성화됩니다. (Number)
 warning_distance = 7
 
-# 디버그 모드에서 크리퍼를 표시할 최소 confidence (0.0 ~ 1.0)
-debug_conf = 
-
 # ========== 디버그 ==========
 # 디버그 모드 (True, False)
 debug_mode = False

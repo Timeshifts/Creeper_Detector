@@ -9,11 +9,11 @@
 
 ## Minecraft
 - [Minecraft Java Edition 1.14-1.20.6](https://www.minecraft.net/)
- - 기본 리소스팩이 크게 변경된 1.13 이전 버전에서는 잘 작동하지 않을 수 있습니다.
+    - 기본 리소스팩이 크게 변경된 1.13 이전 버전에서는 잘 작동하지 않을 수 있습니다.
 - 권장 비디오 설정
- - 시야 범위 : 보통(70)
- - 밝기: 밝게
- - 화면비: 16 : 9
+    - 시야 범위 : 보통(70)
+    - 밝기: 밝게
+    - 화면비: 16 : 9
 - **Minecraft를 소유하지 않은 경우**, `options.txt`의 `use_example = True`로 설정하여 프로그램을 가동해 볼 수 있습니다.
 
 # 사용법 설명
@@ -25,7 +25,7 @@
 프로그램이 실행되면 자동으로 크리퍼를 감지하여, 예상 폭발 반경을 표시합니다.
 - 빨간 원(3m): 크리퍼의 폭발 강도(3)을 고려했을 때, 흙 등 일반적인 블록이 파괴되는 범위입니다.
 - 노란 원(7m): 크리퍼의 폭발에 엔티티가 피해를 입을 수 있는 최대 범위이며, 이 거리 밖으로 벗어날 경우 크리퍼가 자폭을 중지합니다.
- - 경고음이 나는 초기 기준도 이 거리로 설정되어 있습니다.
+    - 경고음이 나는 초기 기준도 이 거리로 설정되어 있습니다.
 
 ## 단축키
 ### Q
@@ -90,17 +90,17 @@ yolo 8.2버전의 yolov8s 모델을 기반으로 학습하였습니다.
 ## 참고 자료
 - [ChatGPT 4o](https://chatgpt.com), [Github Copilot](https://github.com/features/copilot)
 - [YOLO Documentation](https://docs.ultralytics.com/ko)
- - ChatGPT가 yolov5를 기준으로 한 정보를 제공해서, yolov8로 migration하는 과정에 주로 참고
+    - ChatGPT가 yolov5를 기준으로 한 정보를 제공해서, yolov8로 migration하는 과정에 주로 참고
 - [label-studio](https://github.com/HumanSignal/label-studio)
- - 데이터 라벨링에 사용
+    - 데이터 라벨링에 사용
 - https://github.com/orgs/ultralytics/discussions/7974
- - 모델 예측 결과 가져오기 코드 사용
+    - 모델 예측 결과 가져오기 코드 사용
 - [mint-lab/3dv-tutorial](https://github.com/mint-lab/3dv_tutorial)
- - pose_estimation.py 대부분 사용
+    - pose_estimation.py 대부분 사용
 - [mint-lab/cv-tutorial](https://github.com/mint-lab/cv_tutorial)
- - video_converter.py 일부 화면 녹화, 재생 관련 코드 사용
+    - video_converter.py 일부 화면 녹화, 재생 관련 코드 사용
 - https://stackoverflow.com/questions/71233954/python-interpreter-locked-freezing-while-trying-to-run-pygetwindow-as-a-thread
- - 화면 캡처/녹화 스레드 구현에 일부 사용
+    - 화면 캡처/녹화 스레드 구현에 일부 사용
 
 # 라이선스
 - datasets/dataset.zip의 이미지, resource/creeper_head.png, example_video.avi\
