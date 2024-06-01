@@ -11,10 +11,6 @@ def draw_explosion(frame, box):
     creeper_real = (0.6, 1.7)  # 실제 크리퍼의 너비, 높이 (블록 단위)
     creeper_width_pixels = x2 - x1  # 감지된 크리퍼의 너비 (픽셀 단위)
     creeper_height_pixels = creeper_width_pixels / creeper_real[0] * creeper_real[1]
-    
-    # pitch_estimation.py 참고
-    # estimated_pitch, count = estimate_pitch(frame)
-    # pitch = np.clip(estimated_pitch, 10.0, 40.0)
 
     # 카메라에서 크리퍼까지의 거리 계산
     # 마인크래프트의 fov는 수직 각도만이 설정된 값으로 고정되므로, 크리퍼의 높이 사용

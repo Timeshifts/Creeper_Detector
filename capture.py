@@ -65,6 +65,8 @@ def set_frame():
 def record_frame():
     Recording = False
     frame = None
+    target = None
+
     while not stop_event.is_set():
         if record_event.is_set():
             frame = get_frame(record_queue, False)
@@ -85,16 +87,15 @@ def record_frame():
             elapsed_time_recording = time.time() - last_record_time
             frames_to_add = int(elapsed_time_recording / frame_delay)
 
-            print(frames_to_add)
             if frames_to_add > 0: 
                 for _ in range(frames_to_add): target.write(frame)
             last_record_time += frames_to_add * frame_delay
         else:
             if Recording: # REC -> no REC
-                print('release')
                 target.release()
                 Recording = False
             time.sleep(0.01)
+    if target.isOpened(): target.release()
 
 def get_frame(target_queue: queue.Queue, return_none=True):
     while True:

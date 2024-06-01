@@ -1,5 +1,4 @@
 import cv2, time, torch, datetime, pygame
-import numpy as np
 from ultralytics import YOLO
 from creeper import *
 from option import *
@@ -16,12 +15,15 @@ def main():
 
     global window_height, window_width
 
-    # Pygame 창 설정
-    pygame_screen = pygame.display.set_mode((window_width, window_height))
-    pygame.display.set_caption("Creeper Detector")
-   
     pygame.init()
     pygame.mixer.init()
+
+    # Pygame 창 설정
+    pygame_screen = pygame.display.set_mode((window_width, window_height))
+    pygame.display.set_caption('Creeper Detector')
+
+    icon = pygame.image.load('resource/icon.png')
+    pygame.display.set_icon(icon)
 
     warn_sound = pygame.mixer.Sound('resource/warn.wav')
     shutter_sound = pygame.mixer.Sound('resource/shutter.wav')
@@ -37,10 +39,9 @@ def main():
 
     running = True
     show_help = False
-    game_mode = False
 
     help_text = []
-    help_string = ['Q: 도움말 호출', 'S: 화면 촬영', 'R: 크기 재조정', 'F9: 화면 녹화', 'ESC: 종료', 'G: 게임 모드']
+    help_string = ['Q: 도움말 호출', 'S: 화면 촬영', 'R: 크기 재조정', 'F9: 화면 녹화', 'ESC: 종료']
 
     for string in help_string:
         text = font.render(string, True, (0, 0, 0))
@@ -97,7 +98,7 @@ def main():
                     # 's' 키를 누르면 이미지 저장
                     shutter_sound.play()
                     # Generate a timestamp
-                    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                    timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
                     cv2.imwrite(f'screenshot/{timestamp}.png', frame)
                     print(f'screenshot/{timestamp}.png')
                 elif event.key == pygame.K_r:
@@ -106,6 +107,7 @@ def main():
                     pygame_screen = pygame.display.set_mode(size)
                 elif event.key == pygame.K_F9:
                     # F9 키로 화면 녹화
+                    shutter_sound.play()
                     if record_event.is_set():
                         record_event.clear()
                     else:
@@ -113,9 +115,6 @@ def main():
                 elif event.key == pygame.K_q:
                     # q 키로 명령어 표시
                     show_help = not show_help
-                elif event.key == pygame.K_g:
-                    # g 키로 게임 모드
-                    game_mode = not game_mode
 
         if frame is not None:
             if record_event.is_set():
@@ -127,7 +126,6 @@ def main():
         sleep_time = max(0, frame_delay - elapsed_time)
 
         time.sleep(sleep_time)
-
         pygame.display.update()
 
     cv2.destroyAllWindows()
@@ -136,5 +134,5 @@ def main():
     capture_thread.join()
     record_thread.join()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
