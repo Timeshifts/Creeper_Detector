@@ -79,9 +79,12 @@ yolo 8.2버전의 yolov8s 모델을 기반으로 학습하였습니다.
 
 # 갤러리
 ## 작동 화면
-![Screen recording](readme/Record.png)\단축키 호출(Q)와 화면 녹화(F9)를 사용한 상태
-![Creeper at night](readme/Night.png)\야간 크리퍼 탐지
-![Multi Creeper](readme/Multi.png)\다중 크리퍼 탐지
+![Screen recording](readme/Record.png)\
+단축키 호출(Q)와 화면 녹화(F9)를 사용한 상태
+![Creeper at night](readme/Night.png)\
+야간 크리퍼 탐지
+![Multi Creeper](readme/Multi.png)\
+다중 크리퍼 탐지
 
 ## 참고 자료
 - [ChatGPT 4o](https://chatgpt.com), [Github Copilot](https://github.com/features/copilot)
