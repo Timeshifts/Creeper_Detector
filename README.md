@@ -64,7 +64,7 @@ yolo 8.2버전의 yolov8s 모델을 기반으로 학습하였습니다.
 [이곳을 눌러 확인할 수 있습니다.](readme/model_results.csv)
 
 ## 추가 학습 방법
-1. 원래 dataset을 포함하고 싶다면, `datasets/dataset.zip`을 `datasets` 아래에 압축 해제합니다.
+1. 원래 dataset을 포함하고 싶다면, dataset을 [다운로드](https://tinyurl.com/2x4eabek)해서 `datasets` 아래에 압축 해제합니다.
 2. `datasets/creeper/images` 아래에 추가 이미지를, `datasets/creeper/labels` 아래에 YOLO 형식에 맞게 추가 라벨을 저장합니다.
 3. `training/train.py` 를 실행합니다.
 4. 생성된 `runs/detect/train###/weights/best.pt`를 `resource/creeper_model.pt`에 위치시킵니다.
@@ -103,7 +103,7 @@ yolo 8.2버전의 yolov8s 모델을 기반으로 학습하였습니다.
     - 화면 캡처/녹화 스레드 구현에 일부 사용
 
 # 라이선스
-- datasets/dataset.zip의 이미지, resource/creeper_head.png, example_video.avi\
+- dataset의 이미지, resource/creeper_head.png, example_video.avi\
 게임 'Minecraft'의 스크린샷으로, Mojang의 EULA를 따릅니다.
 - resource/warn.wav\
 Tin Hiệu 0 by SieuAmThanh -- https://freesound.org/s/608859/ -- License: Creative Commons 0
