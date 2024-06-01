@@ -1,7 +1,7 @@
 # 크리퍼 감지기 (Creeper_Detector)
 ![Title image](readme/Title.png)\
 게임 마인크래프트(Minecraft)의 화면에서 크리퍼(Creeper)를 인식하고,
-크리퍼 주변에 예상 폭발 피해 범위(블록, 엔티티)를 표시해주는 프로그램입니다.
+크리퍼가 주변에 있으면 경고음을 울리며 예상 폭발 피해 범위를 표시해주는 프로그램입니다.
 
 # 필요 환경
 ## Python
@@ -10,11 +10,22 @@
 ## Minecraft
 - [Minecraft Java Edition 1.14-1.20.6](https://www.minecraft.net/)
  - 기본 리소스팩이 크게 변경된 1.13 이전 버전에서는 잘 작동하지 않을 수 있습니다.
+- 권장 비디오 설정
+ - 시야 범위 : 보통(70)
+ - 밝기: 밝게
+ - 화면비: 16 : 9
+- **Minecraft를 소유하지 않은 경우**, `options.txt`의 `use_example = True`로 설정하여 프로그램을 가동해 볼 수 있습니다.
 
 # 사용법 설명
 
 ## 실행 방법
 `main.py`를 실행해 주세요.
+
+## 감지
+프로그램이 실행되면 자동으로 크리퍼를 감지하여, 예상 폭발 반경을 표시합니다.
+- 빨간 원(3m): 크리퍼의 폭발 강도(3)을 고려했을 때, 흙 등 일반적인 블록이 파괴되는 범위입니다.
+- 노란 원(7m): 크리퍼의 폭발에 엔티티가 피해를 입을 수 있는 최대 범위이며, 이 거리 밖으로 벗어날 경우 크리퍼가 자폭을 중지합니다.
+ - 경고음이 나는 초기 기준도 이 거리로 설정되어 있습니다.
 
 ## 단축키
 ### Q
@@ -49,6 +60,8 @@ yolo 8.2버전의 yolov8s 모델을 기반으로 학습하였습니다.
 ## 성능 분석
 ### F1-Curve
 ![F1-Score](readme/F1_curve_320.png)
+### 예측 평가
+![Validation](readme/Validation.jpg)
 ### 그 외 결과
 [이곳을 눌러 확인할 수 있습니다.](readme/model_results.csv)
 
@@ -68,7 +81,9 @@ yolo 8.2버전의 yolov8s 모델을 기반으로 학습하였습니다.
 
 # 갤러리
 ## 작동 화면
-
+![Screen recording](readme/Record.png)\단축키 호출(Q)와 화면 녹화(F9)를 사용한 상태
+![Creeper at night](readme/Night.png)\야간 크리퍼 탐지
+![Multi Creeper](readme/Multi.png)\다중 크리퍼 탐지
 
 ## 참고 자료
 - [ChatGPT 4o](https://chatgpt.com), [Github Copilot](https://github.com/features/copilot)
