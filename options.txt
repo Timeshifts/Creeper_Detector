@@ -1,4 +1,7 @@
 # ========== 일반 ==========
+# 실제 Minecraft 창을 캡처하는 대신, example_video.avi를 사용합니다.
+use_example = False
+
 # 창 너비 (640~)
 window_width = 1920
 
