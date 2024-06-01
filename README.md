@@ -47,7 +47,7 @@ yolo 8.2버전의 yolov8s 모델을 기반으로 학습하였습니다.
 
 ## 사용 Dataset
 어두운 곳이나 밝은 곳 등 여러 상황을 고려한 크리퍼 Dataset이 존재하지 않아, 직접 제작하였습니다. 
-`datasets/creeper` 디렉토리 내에 있는 Dataset을 사용하였습니다.
+`datasets` 디렉토리 내에 있는 Dataset을 사용하였습니다.
 
 ### Dataset 정보
 - 총 이미지 수: 320
