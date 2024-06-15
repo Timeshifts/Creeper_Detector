@@ -88,9 +88,6 @@ yolo 8.2버전의 yolov8s 모델을 기반으로 학습하였습니다.
 다중 크리퍼 탐지
 
 ## 참고 자료
-- [ChatGPT 4o](https://chatgpt.com), [Github Copilot](https://github.com/features/copilot)
-- [YOLO Documentation](https://docs.ultralytics.com/ko)
-    - ChatGPT가 yolov5를 기준으로 한 정보를 제공해서, yolov8로 migration하는 과정에 주로 참고
 - [label-studio](https://github.com/HumanSignal/label-studio)
     - 데이터 라벨링에 사용
 - https://github.com/orgs/ultralytics/discussions/7974
